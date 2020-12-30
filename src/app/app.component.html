@@ -1,21 +1,128 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<!doctype html>
+<html>
+	<head>
+    <title>MessageBox</title>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700,300' rel='stylesheet' type='text/css'>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css'>
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+	</head>
+	<body>
+      <div id="frame">
+        <div id="sidepanel">
+          <div id="profile">
+            <div class="wrap">
+              <img *ngIf="personalInfo.image" id="profile-img" src={{personalInfo.image}} class="online" alt="" />
+              <img *ngIf="!personalInfo.image" id="profile-img" src="../assets/images/no-profile-image.gif" class="online" alt="" />
+              <p>{{personalInfo.name}}</p>
+              <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+              <div id="status-options">
+                <ul>
+                  <li id="status-online" class="active"><span class="status-circle"></span> <p>Online</p></li>
+                  <li id="status-away"><span class="status-circle"></span> <p>Away</p></li>
+                  <li id="status-busy"><span class="status-circle"></span> <p>Busy</p></li>
+                  <li id="status-offline"><span class="status-circle"></span> <p>Offline</p></li>
+                </ul>
+              </div>
+              <div id="expanded">
+                <label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
+                <input name="twitter" type="text" value="mikeross" />
+                <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
+                <input name="twitter" type="text" value="ross81" />
+                <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
+                <input name="twitter" type="text" value="mike.ross" />
+              </div>
+            </div>
+          </div>
+          <div id="search">
+            <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+            <input type="text" placeholder="Search contacts..." />
+          </div>
+          <div id="contacts">
+            <ul>
+              <li *ngFor="let item of contract; let i = index" class="contact" [ngClass] = "(i==currentSelect)?'active':''" (click)="onClickItem(i)">
+                <div class="wrap">
+                  <span class="contact-status" [ngClass] = "item.status"></span>
+                  <img *ngIf="item.image" src={{item.image}} alt="" />
+                  <img *ngIf="!item.image" width="40" height="40" src="../assets/images/no-profile-image.gif" alt="" />
+                  <div class="meta">
+                    <p class="name">{{item.name}}</p>
+                    <p class="preview" *ngIf="messages[i]&&messages[i].details[messages[i].details.length-1]&&messages[i].details[messages[i].details.length-1].content">{{messages[i].details[messages[i].details.length-1].content}}</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div id="bottom-bar">
+            <button id="addcontact" (click)="addContact()" style="width: 100%;"><i class="fa fa-user-plus fa-fw" aria-hidden="true"></i> <span>Add contact</span></button>
+            <!-- <button id="settings"><i class="fa fa-cog fa-fw" aria-hidden="true"></i> <span>Settings</span></button> -->
+          </div>
+        </div>
+        <div class="content">
+          <div class="contact-profile">
+            <img *ngIf="contract[currentSelect].image" src={{contract[currentSelect].image}} alt="" />
+            <img *ngIf="!contract[currentSelect].image" src="../assets/images/no-profile-image.gif" alt="" />
+            <p>{{contract[currentSelect].name}}</p>
+            <div class="social-media">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="messages" #scrollBottom>
+            <ul >
+              <!-- <li *ngFor = "let item of messages[currentSelect].details;let i  = index" [contextMenu]="basicMenu" [contextMenuSubject]="item" [ngClass]="(item.sender==0)?'sent':'replies'"> -->
+              <li *ngFor = "let item of messages[currentSelect].details;let i  = index" [ngClass]="(item.sender==0)?'sent':'replies'">
+                <img *ngIf="item.sender == 0" src={{personalInfo.image}} alt="" />
+                <img *ngIf="item.sender == 1" src={{contract[currentSelect].image}} alt="" />
 
-<router-outlet></router-outlet>
+                <div [shAttachMenu]="menu" [shMenuData]="item">
+                  <p *ngIf="item.content">{{item.content}}</p>
+                  <p class="reply" *ngIf="item.replied"><i class="fa fa-reply"></i> {{item.replied}}</p>
+                  <img class="msgImage" *ngIf = "item.image" src={{item.image}} alt="" />
+                </div>
+
+              </li>
+            </ul>
+  
+            <!-- <context-menu #basicMenu [useBootstrap4]="true">
+                <ng-template contextMenuItem let-item (click)="reply($event.item)">
+                  Reply
+                </ng-template>
+                <ng-template contextMenuItem let-item (execute)="deleteMsg($event.item)">
+                  Delete
+                </ng-template>
+            </context-menu> -->
+            <sh-context-menu #menu>
+              <ng-template shContextMenuItem let-item (click)="reply($event.data)">
+                <div>
+                  Reply
+                </div>
+              </ng-template>
+              <ng-template shContextMenuItem let-item (click)="deleteMsg($event.data)" >
+                <div>
+                  Delete
+                </div>
+              </ng-template>
+            </sh-context-menu>
+
+          </div>
+          <div class="replyBox" *ngIf="replyText">
+            <i class="fa fa-reply"></i>
+            <p>{{replyText}}</p>
+            <i class="fa fa-times" (click)="closeReply()"></i>
+          </div>
+          <div class="message-input">
+            <div class="wrap">
+            <input type="text" class="form-control" [(ngModel)]="msg" placeholder="Write your message..."  (keyup.enter)="sendMsg()" />
+            <div class="attachFile">
+              <input #file id="addFile" type="file" class="inputfile" accept='image/*' (change)="addImage(file.files)" />
+              <label for="addFile" ><i class="fa fa-paperclip attachment" aria-hidden="true" ></i></label>
+            </div>
+            <button class="submit" (click)="sendMsg()"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </body>
+</html>

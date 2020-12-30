@@ -1,0 +1,94 @@
+<div class="container">
+  <span (click)="close()"><i class="fa fa-times-circle closebtn"></i></span>
+  <p style="width: 50%;">Add Contact</p>
+  <hr>
+	<div class="row">
+      <!-- left column -->
+      <div class="col-md-4">
+        <div class="text-center">
+          <input #files id="addPhoto" type="file" class="inputfile" accept='image/*' (change)="addPhoto(files.files)" />
+          <label for="addPhoto" ><i class="fa fa-plus-circle"></i></label>
+          <img *ngIf="imagePath" src={{imagePath}} style="width: 100px;height:100px;border-radius: 50%;" class="avatar img-circle" alt="">
+          <img *ngIf="!imagePath" src="../assets/images/no-profile-image.gif" style="width: 100px;height:100px;border-radius: 50%;" class="avatar img-circle" alt="">
+        </div>
+      </div>
+      
+      <!-- edit form column -->
+      <div class="col-md-8 personal-info">
+        <div class="alert alert-info alert-dismissable">
+          <a class="panel-close close" data-dismiss="alert">×</a> 
+          <i class="fa fa-coffee"></i>
+          Add a new contact.
+        </div>
+        <h3 style="font-weight: bold;margin-bottom:1rem">Personal info</h3>
+        
+        <form class="form-horizontal" role="form">
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Name:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-9 control-label">Phone Number:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" [(ngModel)]="phoneNumber" [ngModelOptions]="{standalone: true}">
+            </div>
+          </div>
+          <!--<div class="form-group">
+            <label class="col-lg-3 control-label">Company:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Email:</label>
+            <div class="col-lg-8">
+              <input class="form-control" type="text" value="janesemail@gmail.com">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label">Time Zone:</label>
+            <div class="col-lg-8">
+              <div class="ui-select">
+                <select id="user_time_zone" class="form-control">
+                  <option value="Hawaii">(GMT-10:00) Hawaii</option>
+                  <option value="Alaska">(GMT-09:00) Alaska</option>
+                  <option value="Pacific Time (US &amp; Canada)">(GMT-08:00) Pacific Time (US &amp; Canada)</option>
+                  <option value="Arizona">(GMT-07:00) Arizona</option>
+                  <option value="Mountain Time (US &amp; Canada)">(GMT-07:00) Mountain Time (US &amp; Canada)</option>
+                  <option value="Central Time (US &amp; Canada)" selected="selected">(GMT-06:00) Central Time (US &amp; Canada)</option>
+                  <option value="Eastern Time (US &amp; Canada)">(GMT-05:00) Eastern Time (US &amp; Canada)</option>
+                  <option value="Indiana (East)">(GMT-05:00) Indiana (East)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Username:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="janeuser">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Password:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="password" value="11111122333">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Confirm password:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="password" value="11111122333">
+            </div>
+          </div> -->
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <p class="btn btn-primary" (click)="add()"><i class="fa fa-user-plus"></i> Add</p>
+            </div>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>
